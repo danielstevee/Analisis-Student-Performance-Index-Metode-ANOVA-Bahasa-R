@@ -1,37 +1,32 @@
 # ======================================
-# ANOVA HOURS STUDIED
+# ANOVA SLEEP HOURS
 # ======================================
 
-# Membaca dataset
 data <- read.csv("Student_Performance.csv")
-
-# Mengambil 30 data pertama
 data <- data[1:30, ]
 
-# Tabel data
-tabel <- data[, c("Hours.Studied", "Performance.Index")]
+tabel <- data[, c("Sleep.Hours", "Performance.Index")]
 
 cat("\n====================================\n")
-cat("      HOURS STUDIED DATA\n")
+cat("        SLEEP HOURS DATA\n")
 cat("====================================\n\n")
 
 print(tabel)
 
-# Membuat kelompok
-data$Hours.Group <- cut(
-  data$Hours.Studied,
-  breaks = c(0,3,6,10),
-  labels = c("Rendah","Sedang","Tinggi")
+# Kelompok Sleep Hours
+data$Sleep.Group <- cut(
+  data$Sleep.Hours,
+  breaks = c(0,4,7,10),
+  labels = c("Kurang","Normal","Tinggi")
 )
 
-# Jumlah kelompok
 cat("\n====================================\n")
 cat("      JUMLAH KELOMPOK\n")
 cat("====================================\n\n")
 
-print(table(data$Hours.Group))
+print(table(data$Sleep.Group))
 
-# Uji normalitas
+# Normalitas
 cat("\n====================================\n")
 cat("       UJI NORMALITAS\n")
 cat("====================================\n\n")
@@ -43,46 +38,46 @@ cat("\n====================================\n")
 cat("         HASIL ANOVA\n")
 cat("====================================\n\n")
 
-anova_hours <- aov(
-  Performance.Index ~ Hours.Group,
+anova_sleep <- aov(
+  Performance.Index ~ Sleep.Group,
   data = data
 )
 
-hasil_hours <- summary(anova_hours)
+hasil_sleep <- summary(anova_sleep)
 
-print(hasil_hours)
+print(hasil_sleep)
 
 # Tukey
 cat("\n====================================\n")
 cat("         TUKEY HSD\n")
 cat("====================================\n\n")
 
-print(TukeyHSD(anova_hours))
+print(TukeyHSD(anova_sleep))
 
 # ======================================
 # KESIMPULAN
 # ======================================
 
-p_hours <- hasil_hours[[1]][["Pr(>F)"]][1]
+p_sleep <- hasil_sleep[[1]][["Pr(>F)"]][1]
 
 cat("\n====================================\n")
 cat("          KESIMPULAN\n")
 cat("====================================\n\n")
 
-cat("P-Value :", p_hours, "\n\n")
+cat("P-Value :", p_sleep, "\n\n")
 
-if (p_hours < 0.05) {
+if (p_sleep < 0.05) {
 
   cat("Karena p-value < 0.05\n")
   cat("Maka H0 ditolak.\n")
-  cat("Hours Studied berpengaruh signifikan\n")
+  cat("Sleep Hours berpengaruh signifikan\n")
   cat("terhadap Performance Index.\n")
 
 } else {
 
   cat("Karena p-value > 0.05\n")
   cat("Maka H0 gagal ditolak.\n")
-  cat("Hours Studied tidak berpengaruh signifikan\n")
+  cat("Sleep Hours tidak berpengaruh signifikan\n")
   cat("terhadap Performance Index.\n")
 
 }
