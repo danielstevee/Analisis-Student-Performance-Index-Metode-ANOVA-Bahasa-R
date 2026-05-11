@@ -1,18 +1,6 @@
-# ======================================
-# TWO-WAY ANOVA
-# Previous Scores + Hours Studied
-# vs Performance Index
-# ======================================
-
-# Membaca dataset
 data <- read.csv("Student_Performance.csv")
 
-# Mengambil 30 data pertama
 data <- data[1:30, ]
-
-# ======================================
-# TABEL DATA
-# ======================================
 
 cat("\n====================================\n")
 cat("         TABEL DATA\n")
@@ -26,27 +14,17 @@ tabel <- data[, c(
 
 print(tabel)
 
-# ======================================
-# MEMBUAT KELOMPOK
-# ======================================
-
-# Kelompok Previous Scores
 data$Previous.Group <- cut(
   data$Previous.Scores,
   breaks = c(0,59,79,100),
   labels = c("Rendah","Sedang","Tinggi")
 )
 
-# Kelompok Hours Studied
 data$Hours.Group <- cut(
   data$Hours.Studied,
   breaks = c(0,3,6,10),
   labels = c("Rendah","Sedang","Tinggi")
 )
-
-# ======================================
-# JUMLAH KELOMPOK
-# ======================================
 
 cat("\n====================================\n")
 cat("     KELOMPOK PREVIOUS SCORES\n")
@@ -60,19 +38,11 @@ cat("====================================\n\n")
 
 print(table(data$Hours.Group))
 
-# ======================================
-# UJI NORMALITAS
-# ======================================
-
 cat("\n====================================\n")
 cat("         UJI NORMALITAS\n")
 cat("====================================\n\n")
 
 print(shapiro.test(data$Performance.Index))
-
-# ======================================
-# TWO-WAY ANOVA
-# ======================================
 
 cat("\n====================================\n")
 cat("         TWO-WAY ANOVA\n")
@@ -88,19 +58,11 @@ hasil <- summary(anova_two_way)
 
 print(hasil)
 
-# ======================================
-# TUKEY HSD
-# ======================================
-
 cat("\n====================================\n")
 cat("           TUKEY HSD\n")
 cat("====================================\n\n")
 
 print(TukeyHSD(anova_two_way))
-
-# ======================================
-# KESIMPULAN
-# ======================================
 
 cat("\n====================================\n")
 cat("           KESIMPULAN\n")
@@ -114,7 +76,6 @@ cat("P-Value Previous Scores :", p_previous, "\n")
 cat("P-Value Hours Studied   :", p_hours, "\n")
 cat("P-Value Interaksi       :", p_interaksi, "\n\n")
 
-# Previous Scores
 if (p_previous < 0.05) {
 
   cat("Previous Scores berpengaruh signifikan\n")
@@ -127,7 +88,6 @@ if (p_previous < 0.05) {
 
 }
 
-# Hours Studied
 if (p_hours < 0.05) {
 
   cat("Hours Studied berpengaruh signifikan\n")
@@ -140,7 +100,6 @@ if (p_hours < 0.05) {
 
 }
 
-# Interaksi
 if (p_interaksi < 0.05) {
 
   cat("Terdapat interaksi signifikan antara\n")

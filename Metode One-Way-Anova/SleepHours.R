@@ -1,7 +1,3 @@
-# ======================================
-# ANOVA SLEEP HOURS
-# ======================================
-
 data <- read.csv("Student_Performance.csv")
 data <- data[1:30, ]
 
@@ -13,7 +9,6 @@ cat("====================================\n\n")
 
 print(tabel)
 
-# Kelompok Sleep Hours
 data$Sleep.Group <- cut(
   data$Sleep.Hours,
   breaks = c(0,4,7,10),
@@ -26,14 +21,12 @@ cat("====================================\n\n")
 
 print(table(data$Sleep.Group))
 
-# Normalitas
 cat("\n====================================\n")
 cat("       UJI NORMALITAS\n")
 cat("====================================\n\n")
 
 print(shapiro.test(data$Performance.Index))
 
-# ANOVA
 cat("\n====================================\n")
 cat("         HASIL ANOVA\n")
 cat("====================================\n\n")
@@ -47,16 +40,11 @@ hasil_sleep <- summary(anova_sleep)
 
 print(hasil_sleep)
 
-# Tukey
 cat("\n====================================\n")
 cat("         TUKEY HSD\n")
 cat("====================================\n\n")
 
 print(TukeyHSD(anova_sleep))
-
-# ======================================
-# KESIMPULAN
-# ======================================
 
 p_sleep <- hasil_sleep[[1]][["Pr(>F)"]][1]
 

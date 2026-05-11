@@ -1,7 +1,3 @@
-# ======================================
-# ANOVA PREVIOUS SCORES
-# ======================================
-
 data <- read.csv("Student_Performance.csv")
 data <- data[1:30, ]
 
@@ -13,7 +9,6 @@ cat("====================================\n\n")
 
 print(tabel)
 
-# Kelompok Previous Scores
 data$Previous.Group <- cut(
   data$Previous.Scores,
   breaks = c(0,59,79,100),
@@ -26,14 +21,12 @@ cat("====================================\n\n")
 
 print(table(data$Previous.Group))
 
-# Normalitas
 cat("\n====================================\n")
 cat("       UJI NORMALITAS\n")
 cat("====================================\n\n")
 
 print(shapiro.test(data$Performance.Index))
 
-# ANOVA
 cat("\n====================================\n")
 cat("         HASIL ANOVA\n")
 cat("====================================\n\n")
@@ -47,16 +40,11 @@ hasil_previous <- summary(anova_previous)
 
 print(hasil_previous)
 
-# Tukey
 cat("\n====================================\n")
 cat("         TUKEY HSD\n")
 cat("====================================\n\n")
 
 print(TukeyHSD(anova_previous))
-
-# ======================================
-# KESIMPULAN
-# ======================================
 
 p_previous <- hasil_previous[[1]][["Pr(>F)"]][1]
 
